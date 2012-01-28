@@ -1,0 +1,10 @@
+This is a small AJAX demo. It runs on a node.js server. (http://nodejs.org)
+Tested on node v0.6.9, but there's very little going on here, so it will probably run on earlier versions.
+
+Type this command in the terminal of a computer with node installed, while in the src directory:
+> node index.js
+
+Then visit localhost:8000 in a browser.
+
+Bugs:
+* Rapidly submitting can cause your browser to hang and stop responding until a refresh. I'm looking into it.

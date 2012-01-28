@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+}
+
+div.wrapper {
+    width: 800px;
+    border: 10px dashed #ACCACC;
+    border-top: none;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 550px;
+}
+
+div.container {
+    position: relative;
+    height: 200px;
+}
+
+div.announcement {
+    padding: 20px;
+}
+
+div.entry {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: 380px;
+    height: 200px;
+}
+
+div.entry form input {
+
+}
+
+div.display {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    width: 380px;
+    height: 200px;
+}
+
+div.display input {
+    border: none;
+    background: #FFF;
+    width: 380px;
+    height: 30px;
+    font-size: 16px;
+}
+
+div.explain {
+    padding: 20px;
+}

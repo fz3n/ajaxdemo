@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>A simple AJAX demo</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <script src="js/jquery-1.7.1.min.js"></script>
+  <script src="js/script.js"></script>
+</head>
+
+<body>
+<div class="wrapper">
+
+  <div class="announcement">
+    <h1>A simple AJAX demo.</h1>
+  </div>
+
+  <div class="container">
+    <div class="entry">
+      <h2>Submit something here:</h2>
+      <form action="submit" id="submission">
+        <input name="input" type="text"/> <br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
+    <div class="display">
+      <h2>And a SHA1 hash appears here:</h2>
+      <input id="hash"></input>
+    </div>
+  </div>
+
+  <div class="explain">
+    Live updates occur from any user submission with long polling.
+    <br /> <br />
+    Try this in two browser windows at once, or on two
+    different computers.
+    <br /> <br />
+    Server is node.js, AJAX is handled by jQuery.
+    <br /> <br />
+    You can find the source on
+    <a href="https://github.com/frankcrook/ajaxdemo">Github</a>
+  </div>
+
+<div>
+</body>
+</html>

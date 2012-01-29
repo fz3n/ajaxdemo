@@ -3,6 +3,7 @@ var fs = require('fs'),
     events = require('events');
 
 var emitter = new events.EventEmitter()
+emitter.setMaxListeners(0);
 
 function submit(postData, response) {
     console.log("Request handler 'submit' was called.");

@@ -6,5 +6,11 @@ Type this command in the terminal of a computer with node installed, while in th
 
 Then visit localhost:8000 in a browser.
 
-Bugs:
-* Rapidly submitting can cause your browser to hang and stop responding until a refresh. I'm looking into it.
+Recently fixed:
+- No longer hangs after several submissions (was caused by not sending proper response to browser in request.js/submit)
+- Stopped using filesystem, code was leftover from the start of the project when this was a bit more ambitious in scope
+- longPoll responds based on emitters now
+- On a timeout, server is polled appropriately and longPoll restarts
+
+Current Bugs:
+- Behaves oddly with multiple copies of the same browser -- one tab or window receives a response at a time. Not an issue with two different browser programs though (such as a Firefox and Chrome window). Carries across incognito tabs as well. :I

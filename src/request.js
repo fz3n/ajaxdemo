@@ -11,6 +11,8 @@ function submit(postData, response) {
     var shaSum = crypto.createHash('sha1');
     shaSum.update(postData);
     hash = shaSum.digest('hex');
+    response.writeHead(200, {'Content-Type': 'text'});
+    response.end('success');
     emitter.emit('submitted');
 }
 

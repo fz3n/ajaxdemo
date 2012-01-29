@@ -18,27 +18,24 @@ $(document).ready(function() {
                 $("#hash").val(data);
             }
         });
-    }
+    }; //end retrieve()
 
-    //loads the hash on a change
+    //loads the new hash on a change
     function longPoll() {
         $.ajax({
             url: 'longPoll',
             dataType: 'text',
+            complete: longPoll,
+            timeout: 30000,
             success: function(data) {
                 $("#hash").val(data);
-                longPoll();
             },
-            error: function() {
-                //if there is an error, wait 5 seconds and try again
-                setTimeout(longPoll, 5 * 1000);
-            }
+            error: retrieve
         });
-    }
-    window.onload = function() {
-        retrieve();
-        longPoll();
-    }
+    }; //end longPoll()
+
+    retrieve();
+    longPoll();
 
 });
 

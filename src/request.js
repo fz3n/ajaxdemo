@@ -1,20 +1,29 @@
 var fs = require('fs'),
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    events = require('events');
 
+var emitter = new events.EventEmitter()
 
 function submit(postData, response) {
     console.log("Request handler 'submit' was called.");
     var shaSum = crypto.createHash('sha1');
     shaSum.update(postData);
     fs.writeFile('hash', shaSum.digest('hex'));
+    emitter.emit('submitted');
 }
 
 //retrieve immediately returns the text file
 function retrieve(postData, response) {
     fs.readFile('hash', function(error, data) {
-        if (error) throw error;
-        response.writeHead(200, {'Content-Type': 'text'});
-        response.end(data);
+        if (error) {
+            fs.writeFile('hash', '');
+            response.writeHead(500, {'Content-Type': 'text'});
+            response.end();
+        }
+        else {
+            response.writeHead(200, {'Content-Type': 'text'});
+            response.end(data);
+        }
     });
 }
 
@@ -22,10 +31,14 @@ function retrieve(postData, response) {
 function longPoll(postData, response) {
     console.log("Request handler 'longPoll' was called.");
     response.writeHead(200, {'Content-Type': 'text'});
-    fs.watchFile('hash', function(event, filename) {
+    emitter.on('submitted', function() {
         fs.readFile('hash', function(error, data) {
-            if (error) throw error;
-            response.end(data);
+            if (error) {
+                fs.writeFile('hash', '');
+                response.end();
+            } else {
+                response.end(data);
+            }
         });
     });
 }

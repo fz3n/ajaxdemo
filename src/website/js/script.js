@@ -24,6 +24,7 @@ $(document).ready(function() {
     function longPoll() {
         $.ajax({
             url: 'longPoll',
+            cache: false,
             dataType: 'text',
             complete: longPoll,
             timeout: 30000,

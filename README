@@ -6,6 +6,10 @@ Type this command in the terminal of a computer with node installed, while in th
 
 Then visit localhost:8000 in a browser.
 
+New features:
+- Several entries are displayed, timestamped.
+- Better explanation on website.
+
 Recently fixed:
 - No longer hangs after several submissions (was caused by not sending proper response to browser in request.js/submit)
 - Stopped using filesystem, code was leftover from the start of the project when this was a bit more ambitious in scope

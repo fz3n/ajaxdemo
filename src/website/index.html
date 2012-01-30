@@ -24,21 +24,37 @@
     </div>
 
     <div class="display">
-      <h2>And a SHA1 hash appears here:</h2>
-      <input id="hash"></input>
+      <h2>And SHA1 hashes appear here:</h2>
+      <textarea id="hash" readonly="readonly"></textarea>
     </div>
   </div>
 
   <div class="explain">
-    Live updates occur from any user submission with long polling.
-    <br /> <br />
-    Try this in two browser windows at once, or on two
-    different computers.
-    <br /> <br />
-    Server is node.js, AJAX is handled by jQuery.
-    <br /> <br />
-    You can find the source on
-    <a href="https://github.com/frankcrook/ajaxdemo">Github</a>
+    <h3>What is this?</h3>
+    <p>This is a simple demo of long polling. When you (or any other user
+      on this website) submit the form  above, the server generates a
+      SHA1 hash using the post data, then sends that hash to anyone
+      viewing the site.</p>
+    <p>Try this in two different tabs at the same time, or on two
+      computers, to get a better perspective of what's going on.</p>
+    <h3>Why hashes?</h3>
+    <p>Because I don't want to read what anyone has to say in an
+      anonymous chat room on the Internet.</p>
+    <p>Actually, it's to keep this from becoming too complicated. It's
+      intended to be a straightforward demo of how long polling
+      works. If you want raw text, you'll also want logic for:
+      <ul>
+        <li>Formatting strings from POST data</li>
+        <li>Escaping user input</li>
+        <li>Identifying abuse of the service</li>
+      </ul>
+      And from there, we start to get feature creep, such as giving
+      names to users. This is just a simple demo for someone to inspect
+      to see how long polling can work -- not what it can do.
+    <h3>Source?</h3>
+    <p>You can find the source on
+      <a href="https://github.com/frankcrook/ajaxdemo">Github</a>. The
+      server is written with node.js, the AJAX is jQuery. </p>
   </div>
 
 <div>

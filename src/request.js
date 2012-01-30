@@ -6,6 +6,8 @@ emitter.setMaxListeners(0);
 
 var hash = '';
 
+//submit makes a sha1 hash of postData, updates the hash var with it
+//then emits an event for any open longPoll sessions to send
 function submit(postData, response) {
     console.log("Request handler 'submit' was called.");
     var shaSum = crypto.createHash('sha1');

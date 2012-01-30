@@ -4,7 +4,6 @@ var server = require("./server"),
 
 var handle = {}
 handle["/submit"] = request.submit;
-handle["/retrieve"] = request.retrieve;
 handle["/longPoll"] = request.longPoll;
 
 //start the server, passing to it the list of handlers

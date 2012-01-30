@@ -1,13 +1,14 @@
 //router.js
 //called from server.js
-//First attempts to match the request to a handler and execute that handler
-//Otherwise attempts to find a file in a static folder, and send it to the user
-//If it cannot find a file, it delivers a 404 error.
-//If the file is not a .css or .js file, it is sent as text/html. 
-//It's low tech, and not too robust, but the parts are all straightforward for you to use as an example.
+//Forwards a url to a handler function in handler,js.
+//If there isn't a handler, acts as a static file server.
 var url = require('url'),
-    fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    fs = require('fs');
+
+//static values
+STATIC_FOLDER = './website'; //the folder static files are located in
+ROOT = 'index.html'; //the name of the file to be hosted at root
 
 function route(handle, request, response, postData) {
     var pathName = url.parse(request.url).pathname;
@@ -16,42 +17,49 @@ function route(handle, request, response, postData) {
         handle[pathName](postData, response);
     }
     else { 
-        //othewise build a filepath for the file we're looking for
+        //Since there isn't a handler, we try to serve a static file.
+
+        //Start by building a filepath to our static folder.
         var filePath = STATIC_FOLDER + request.url;
         if (filePath == STATIC_FOLDER + '/') {
             filePath = STATIC_FOLDER + '/' + ROOT;
         }
         
-        //identify the type of content being served
-        var extensionName = path.extname(filePath); //path.extname() returns '.xxx' if a file is named 'file.xxx'
-        var contentType = 'text/html'; //our default content type
+        //Identify the filetype of content is being served:
+        var extensionName = path.extname(filePath); 
+        var contentType = 'text/html'; //default
+        //This incredibly simplified switch assumes the content is 
+        //HTML data if it isn't a .js or a .css file.
+        //Consider use a project like node-mime if you have larger ambitions
         switch (extensionName) {
         case '.css': contentType = 'text/css'; 
             break;
         case '.js': contentType = 'text/javascript';
             break;
         }
-        
-        //send the file or a 404
+
+        //With the filepath and mimetype determined, it's time to send the
+        //file or a 404 error.
         path.exists (filePath, function(exists) {
-            if (exists) { //if a file exists at the filepath
+            if (exists) { //if the file exists at the given filePath
                 fs.readFile (filePath, function(error, content) { //read the file
-                    if (error) { //if there is an error reading the file, respond with error 500
-                        response.writeHead(500); //it's the code for an internal error
-                        response.end(); //this could happen due to a permission error
+                    if (error) { //if there is an error reading the file
+                        response.writeHead(500); //respond with a 500/internal error header
+                        response.end(); //this could happen due to a file permission problem
                     }
                     else { //otherwise, serve the file
                         response.writeHead(200, {'Content-Type': contentType}); //use the content type we found above
-                        response.end(content, 'utf-8'); //send the content and close the connection
+                        response.end(content, 'utf-8'); //send the file contents
                     }
                 });
             }
-            else { //if a file does not exist at the filepath send a 404 error to the user
-                response.writeHead(404); //it's the code for file not found
-                response.end(); //close the connection so we don't leave them hanging
+            else { //if the file does not exist at the given filePath
+                response.writeHead(404); //send a 404/not found header
+                response.end(); //close the connection
             }
         }); //end path.exists
     }   
 }
 
+//export the router for external use (called in index.js)
 exports.route = route;

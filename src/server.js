@@ -5,32 +5,29 @@
 
 //we need to use these libraries from node
 var http = require('http'),
-    url = require('url'),
-    fs = require('fs'),
-    path = require('path');
 
-//some magic values
+//static values
 PORT = 8000; //the port the server hosts from
 HOST = null; //null listens on all hosts
-STATIC_FOLDER = './website'; //the folder static files are located in
-ROOT = 'index.html'; //the name of the file to be hosted at root
 
 function start(handle, route) {
     function onRequest(request, response) {
-        //collect any post data
+        //Collect post data from the user
         var postData = "";
         request.addListener("data", function(postDataChunk) {
             postData += postDataChunk;
         });
 
-        //wait for the client to finish sending before continuing
+        //Once the client is finished sending, pass the postData
+        //and the request to the router.
         request.addListener("end", function() {
             route(handle, request, response, postData);
         });
 
     }   
     http.createServer(onRequest).listen(PORT, HOST);
-    console.log("Server has started.");
+    console.log("Server running at " + HOST + ":" + PORT);
 }
 
+//export the server for external use (called in index.js)
 exports.start = start;

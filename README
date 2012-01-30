@@ -11,6 +11,4 @@ Recently fixed:
 - Stopped using filesystem, code was leftover from the start of the project when this was a bit more ambitious in scope
 - longPoll responds based on emitters now
 - On a timeout, server is polled appropriately and longPoll restarts
-
-Current Bugs:
-- Behaves oddly with multiple copies of the same browser -- one tab or window receives a response at a time. Not an issue with two different browser programs though (such as a Firefox and Chrome window). Carries across incognito tabs as well. :I
+- Set cache to off, allowing longPoll to work across multiple tabs of the same session.
